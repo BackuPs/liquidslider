@@ -1,5 +1,5 @@
 /*
- *  Liquid Slider 2.3.14
+ *  Liquid Slider 2.3.12
  *  Copyright 2012 Kevin Batdorf
  *  http://liquidslider.com
  *  MIT license
@@ -29,7 +29,6 @@ if (typeof Object.create !== 'function') {
   $.fn.liquidSlider.options = {
     autoHeight: true,
     minHeight: 0,
-    hasTabTitle: false,
     heightEaseDuration: 1500,
     heightEaseFunction: 'easeInOutExpo',
 
@@ -905,10 +904,6 @@ LiquidSlider.alignNavigation = function() {
 
 LiquidSlider.registerNav = function() {
   var _this = this;
-	if (_this.options.hasTabTitle) {
-		_this.$sliderWrap.addClass("has-tab-title");
-		_this.$sliderWrap.addClass('tab-'+ _this.options.dynamicTabsPosition );
-	}
   (_this.$sliderWrap).find('[class^=ls-nav] li').on('click', function(e) {
     e.preventDefault();
     _this.setNextPanel(parseInt(jQuery(this).attr('class').split('tab')[1], 10) - 1);
