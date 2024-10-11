@@ -1,10 +1,10 @@
-/*!
- *  Liquid Slider
+/*
+ *  Liquid Slider 2.3.12
  *  Copyright 2012 Kevin Batdorf
  *  http://liquidslider.com
  *  MIT license
  */
-
+ 
 // Utility for creating objects in older browsers
 if (typeof Object.create !== 'function') {
   Object.create = function(obj) {
@@ -88,7 +88,7 @@ if (typeof Object.create !== 'function') {
 
     preload: function() {
       var _this = this;
-      jQuery(window).bind('load', function() {
+      jQuery(window).on('load', function() {
         _this.finalize();
       });
     },
@@ -378,17 +378,13 @@ LiquidSlider.transitionFade = function() {
 
 LiquidSlider.hover = function() {
   var _this = this;
-
-  (_this.$sliderWrap).hover(
-    function() {
+  (_this.$sliderWrap).on('mouseenter',function() {
       _this.options.hoverArrows && _this.hideShowArrows(_this.options.fadeInDuration, true, true, false);
       _this.options.pauseOnHover && clearTimeout(_this.autoSlideTimeout);
-    },
-    function() {
+    }).on('mouseleave', function() {
       _this.options.hoverArrows && _this.hideShowArrows(_this.options.fadeOutnDuration, true, false, true);
       (_this.options.pauseOnHover && _this.options.autoSlide) && _this.startAutoSlide(true);
-    }
-  );
+    });
 };
 
 LiquidSlider.events = function() {
@@ -532,7 +528,6 @@ LiquidSlider.sanitizeNumber = function(panel) {
 
 LiquidSlider.finalize = function() {
   var _this = this;
-
   // Adjust the height again
   var height = (_this.options.autoHeight) ? _this.getHeight() : _this.getHeighestPanel(_this.nextPanel);
   _this.options.autoHeight && _this.adjustHeight(true, height);
@@ -609,6 +604,10 @@ LiquidSlider.pretransition = function() {
 
 LiquidSlider.getTransitionMargin = function() {
   var _this = this;
+  var rtl = jQuery('body' ).hasClass('rtl')
+
+  if ( rtl ) return ( 100 - ( ( _this.nextPanel + 1) * _this.slideDistance) ) -
+    (_this.slideDistance * ~~(_this.options.continuous));
 
   return -(_this.nextPanel * _this.slideDistance) -
     (_this.slideDistance * ~~(_this.options.continuous));
@@ -1079,7 +1078,7 @@ LiquidSlider.updateHashTags = function() {
 LiquidSlider.registerKeyboard = function() {
   var _this = this;
 
-  jQuery(document).keydown(function(event) {
+  jQuery(document).on('keydown',function(event) {
     var key = event.keyCode || event.which;
     if (event.target.type !== 'textarea' && event.target.type !== 'textbox') {
 
@@ -1134,7 +1133,7 @@ LiquidSlider.makeResponsive = function() {
 
   // Set events and fire on browser resize
   _this.responsiveEvents();
-  jQuery(window).bind('resize orientationchange', function() {
+  jQuery(window).on('resize orientationchange', function() {
     _this.responsiveEvents();
 
     clearTimeout(_this.resizingTimeout);
@@ -1202,7 +1201,7 @@ LiquidSlider.responsiveEvents = function() {
 
   // Update when the select box changes
   _this.options.mobileNavigation &&
-    (_this.dropdownSelect).change(function() {
+    (_this.dropdownSelect).on('change', function() {
       _this.setNextPanel(parseInt(jQuery(this).val().split('tab')[1], 10) - 1);
     });
 };
