@@ -1,5 +1,5 @@
 /*
- *  Liquid Slider 2.3.12
+ *  Liquid Slider 2.3.14
  *  Copyright 2012 Kevin Batdorf
  *  http://liquidslider.com
  *  MIT license
